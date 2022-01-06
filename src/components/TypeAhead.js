@@ -8,6 +8,11 @@ function TypeAhead({books, handleSelect}) {
 
     let [searchMatches, setSearchMatches] = useState([])
 
+    // function reset() {
+    //     setCurrentSearch('');
+    //     setSearchMatches([]);
+    // }
+
     return (
         <>
         <h1>Search For a Book!</h1>
@@ -17,8 +22,11 @@ function TypeAhead({books, handleSelect}) {
         onChange={(ev) => {
             setCurrentSearch(ev.target.value)
             console.log(currentSearch)
-            setSearchMatches(books.filter((bookTitle) => {
-                return bookTitle.title.toLowerCase().startsWith(currentSearch.toLowerCase())
+            // let regex = new RegExp('/{currentSearch.toLowerCase()}/')
+            setSearchMatches(books.filter((book) => {
+                // return book.title.toLowerCase().startsWith(currentSearch.toLowerCase())
+                // return book.title.toLowerCase().match(regex)
+                return book.title.toLowerCase().includes(currentSearch.toLowerCase())
             }))
             console.log(searchMatches)
             }
@@ -31,7 +39,10 @@ function TypeAhead({books, handleSelect}) {
               }}></input>
 
 
-         <button onClick={() => setCurrentSearch('')}>Clear</button>
+         <button onClick={() => {
+                setCurrentSearch('');
+                setSearchMatches([]);
+         }}>Clear</button>
          <ul>
             {searchMatches.map((book) => {
                 return (
